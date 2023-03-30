@@ -1,20 +1,40 @@
 import { useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { signInFields, signUpFields } from "../../constants/inputFields";
+import { signIn } from "../../services/authApi";
+import { signUp } from "../../services/userApi";
 import { ButtonStyle, FormStyle, InputStyle } from "./FormStyle";
 
-export default function Form({ fields, type }) {
+export default function Form({ type }) {
+  const fields = type === "Login" ? signInFields : signUpFields;
   const fieldsForm = {};
-  fields.forEach((element) => (fieldsForm[element] = ""));
+  fields.forEach((field) => (fieldsForm[field.name] = ""));
   const [bodyForm, setBody] = useState(fieldsForm);
   const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   function handleForm(e) {
     setBody({ ...bodyForm, [e.target.name]: e.target.value });
   }
 
-  function submitLogin(e) {
+  async function submitLogin(e) {
     e.preventDefault();
     setLoading(true);
+
+    try {
+      const response =
+        type === "Login" ? await signIn(bodyForm) : await signUp(bodyForm);
+      const path = type === "Login" ? "/home" : "/";
+      toast(`successful ${type}!`);
+      navigate(path);
+    } catch (error) {
+      toast(`Unable to ${type}`);
+      //console.log(error)
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -22,9 +42,9 @@ export default function Form({ fields, type }) {
       {fields.map((field, index) => (
         <InputStyle
           key={index}
-          placeholder={field}
-          name={field}
-          type={field}
+          placeholder={field.placeholder}
+          name={field.name}
+          type={field.type}
           value={bodyForm[field]}
           onChange={handleForm}
           isLoading={isLoading}
@@ -33,7 +53,7 @@ export default function Form({ fields, type }) {
         />
       ))}
 
-      <ButtonStyle isLoading={isLoading} disabled={isLoading}>
+      <ButtonStyle isLoading={isLoading} disabled={isLoading} type="submit">
         {isLoading ? (
           <RotatingLines
             strokeColor="white"
@@ -42,7 +62,7 @@ export default function Form({ fields, type }) {
             width="42"
           />
         ) : (
-          type
+          "Continue"
         )}
       </ButtonStyle>
     </FormStyle>
