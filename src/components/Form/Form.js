@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { signInFields, signUpFields } from "../../constants/inputFields";
 import { signIn } from "../../services/authApi";
 import { signUp } from "../../services/userApi";
 import { ButtonStyle, FormStyle, InputStyle } from "./FormStyle";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Form({ type }) {
   const fields = type === "Login" ? signInFields : signUpFields;
@@ -19,16 +20,22 @@ export default function Form({ type }) {
     setBody({ ...bodyForm, [e.target.name]: e.target.value });
   }
 
-  async function submitLogin(e) {
+  async function submitForm(e) {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const response =
-        type === "Login" ? await signIn(bodyForm) : await signUp(bodyForm);
-      const path = type === "Login" ? "/home" : "/";
-      toast(`successful ${type}!`);
-      navigate(path);
+      if (type === "Login") {
+        const response = await signIn(bodyForm);
+
+        localStorage.setItem("userData", JSON.stringify(response.data));
+        toast("Successful Login!");
+        navigate("/home");
+      } else {
+        await signUp(bodyForm);
+      }
+      toast("Successful Registration!");
+      navigate("/");
     } catch (error) {
       toast(`Unable to ${type}`);
       //console.log(error)
@@ -38,33 +45,36 @@ export default function Form({ type }) {
   }
 
   return (
-    <FormStyle onSubmit={submitLogin}>
-      {fields.map((field, index) => (
-        <InputStyle
-          key={index}
-          placeholder={field.placeholder}
-          name={field.name}
-          type={field.type}
-          value={bodyForm[field]}
-          onChange={handleForm}
-          isLoading={isLoading}
-          disabled={isLoading}
-          required
-        />
-      ))}
-
-      <ButtonStyle isLoading={isLoading} disabled={isLoading} type="submit">
-        {isLoading ? (
-          <RotatingLines
-            strokeColor="white"
-            strokeWidth="5"
-            animationDuration="0.75"
-            width="42"
+    <>
+      <FormStyle onSubmit={submitForm}>
+        {fields.map((field, index) => (
+          <InputStyle
+            key={index}
+            placeholder={field.placeholder}
+            name={field.name}
+            type={field.type}
+            value={bodyForm[field]}
+            onChange={handleForm}
+            isLoading={isLoading}
+            disabled={isLoading}
+            required
           />
-        ) : (
-          "Continue"
-        )}
-      </ButtonStyle>
-    </FormStyle>
+        ))}
+
+        <ButtonStyle isLoading={isLoading} disabled={isLoading} type="submit">
+          {isLoading ? (
+            <RotatingLines
+              strokeColor="white"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="42"
+            />
+          ) : (
+            "Continue"
+          )}
+        </ButtonStyle>
+      </FormStyle>
+      <ToastContainer autoClose={3000} />
+    </>
   );
 }

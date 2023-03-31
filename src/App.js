@@ -1,21 +1,19 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useContext } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { Container } from "./assets/styles/Container";
 import ResetStyle from "./assets/styles/Reset";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import Signup from "./pages/SignUp/SignUp";
+import UserContext from "./contexts/UserContext";
+import PrivateRoutes from "./routes/PrivateRoutes";
+import PublicRoutes from "./routes/PublicRoutes";
 
 export default function App() {
+  const { userData } = useContext(UserContext);
   return (
     <>
       <ResetStyle />
       <Container>
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/home" element={<Home />} />
-          </Routes>
+          {userData ? <PrivateRoutes /> : <PublicRoutes />}
         </BrowserRouter>
       </Container>
     </>

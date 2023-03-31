@@ -6,7 +6,7 @@ export default function Signup() {
   return (
     <LogRegScreen>
       <h1>Create account</h1>
-      <Form type="Registration" />
+      <Form type="Signup" />
       <StyledLink to="/">Sign in</StyledLink>
     </LogRegScreen>
   );
