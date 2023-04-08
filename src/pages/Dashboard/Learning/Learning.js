@@ -9,6 +9,7 @@ export default function LearningSession() {
   const { userData } = useContext(UserContext);
   const { numCards } = useParams();
   const [cardsSession, setCardSession] = useState(null);
+  const [currentCard, setCurrentCard] = useState(0);
 
   useEffect(() => {
     getLearningCards(userData.token, numCards)
@@ -25,13 +26,26 @@ export default function LearningSession() {
     return <h1>Loading...</h1>;
   }
 
-  return (<LearningStyle>{
-    cardsSession.map((card) => <Card key={card.id} />)
-    }</LearningStyle>);
+  return (
+    <LearningStyle>
+      {cardsSession.map((card, index) => (
+        <Card
+          key={card.id}
+          index={index}
+          card={card}
+          currentCard={currentCard}
+          setCurrentCard={setCurrentCard}
+        />
+      ))}
+    </LearningStyle>
+  );
 }
 
 const LearningStyle = styled.div`
   background-color: #efe4ce;
   height: 100vh;
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
