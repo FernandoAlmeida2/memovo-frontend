@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -7,6 +7,7 @@ import { signIn } from "../../services/authApi";
 import { signUp } from "../../services/userApi";
 import { ButtonStyle, FormStyle, InputStyle } from "./FormStyle";
 import "react-toastify/dist/ReactToastify.css";
+import UserContext from "../../contexts/UserContext";
 
 export default function Form({ type }) {
   const fields = type === "Login" ? signInFields : signUpFields;
@@ -15,6 +16,7 @@ export default function Form({ type }) {
   const [bodyForm, setBody] = useState(fieldsForm);
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setUserData } = useContext(UserContext)
 
   function handleForm(e) {
     setBody({ ...bodyForm, [e.target.name]: e.target.value });
@@ -27,15 +29,15 @@ export default function Form({ type }) {
     try {
       if (type === "Login") {
         const response = await signIn(bodyForm);
-
-        localStorage.setItem("userData", JSON.stringify(response.data));
+        setUserData(response);
+        //localStorage.setItem("userData", JSON.stringify(response.data));
         toast("Successful Login!");
-        navigate("/home");
+        navigate("/menu");
       } else {
         await signUp(bodyForm);
+        toast("Successful Registration!");
+        navigate("/");
       }
-      toast("Successful Registration!");
-      navigate("/");
     } catch (error) {
       toast(`Unable to ${type}`);
       //console.log(error)
