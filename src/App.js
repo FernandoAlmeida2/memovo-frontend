@@ -10,8 +10,8 @@ export default function App() {
   const { userData } = useContext(UserContext);
   return (
     <AppContainer>
-      <ResetStyle />
       <BrowserRouter>
+        <ResetStyle />
         {userData ? <PrivateRoutes /> : <PublicRoutes />}
       </BrowserRouter>
     </AppContainer>
