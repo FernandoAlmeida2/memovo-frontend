@@ -45,6 +45,12 @@ const Resultcontainer = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 20px 0 10px 0;
+
+  @media (max-width: 700px) {
+    height: 43vw;
+    width: 57vw;
+    padding: 2.86vw 0 5.71vw 0;
+  }
 `;
 
 const ResultStyle = styled.div`
@@ -53,18 +59,29 @@ const ResultStyle = styled.div`
   flex-direction: column;
   background-color: #f7d434;
   gap: 10px;
+  @media (max-width: 700px) {
+    gap: 1.4vw;
+  }
 `;
 
 const ScoreTitleDiv = styled.div`
   font-size: 24px;
   line-height: 40px;
   margin-bottom: 20px;
+  @media (max-width: 700px) {
+    line-height: 5.71vw;
+    margin-bottom: 2.86vw;
+    font-size: 3.43vw;
+  }
 `;
 
 const ScoreDiv = styled.div`
   font-size: 32px;
   span {
     color: green;
+  }
+  @media (max-width: 700px) {
+    font-size: 4.57vw;
   }
 `;
 

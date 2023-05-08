@@ -14,6 +14,16 @@ export const LogRegScreen = styled.div`
     inset 0px 0px 0px 5px #ffffff;
   h1 {
     font-size: 32px;
-    width: 300px;
+    width: 83%;
   }
+
+  @media (max-width: 700px) {
+    width: 70vw;
+    min-height: auto;
+    padding: 4.2vw 0;
+    gap: 2.9vw;
+    h1 {
+    font-size: 5vw;
+  }
+  } 
 `;

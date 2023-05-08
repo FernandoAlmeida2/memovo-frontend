@@ -7,7 +7,7 @@ export const MenuStyle = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -15,8 +15,18 @@ export const MenuStyle = styled.div`
   gap: 45px;
   h1 {
     color: #a59e91;
-    margin-top: 245px;
+    margin-top: 38.7vh;
     font-size: 40px;
+  }
+
+  @media (max-width: 700px) {
+    gap: 7.43vw;
+    background-size: 170vw 60vh;
+
+    h1 {
+      margin-top: 43.5vh;
+      font-size: 7.5vw;
+    }
   }
 `;
 
@@ -36,5 +46,15 @@ export const ButtonStyle = styled.button`
   cursor: pointer;
   :hover {
     background: #e55351;
+  }
+
+  @media (max-width: 700px) {
+    width: 40vw;
+    height: 6vw;
+    font-size: 4vw;
+
+    h1 {
+      font-size: 5.71vw;
+    }
   }
 `;
