@@ -3,7 +3,7 @@
 
 ## Sobre
 
-MemoVo é um app para treino de memorização de vocabulário em mandarim. No momento o vocabulário disponível é o HSK 1. O sistema utilizado é o de Leitner com 12 níveis de proficiência, para memorização em flashcards. Uma explicação resumida está disponível em https://en.wikipedia.org/wiki/Leitner_system. Futuramente o projeto pode ser extendido para memorização em geral de algum conteúdo, visto que o sistema empregado não é limitado a vocabulários.
+MemoVo é um app para treino de memorização de vocabulário. No momento o idioma disponível é o mandarim, no nível HSK 1. O sistema utilizado é o de Leitner com 12 níveis de proficiência, para memorização em flashcards. Uma explicação resumida está disponível em https://en.wikipedia.org/wiki/Leitner_system. Futuramente o projeto pode ser extendido para memorização em geral de algum conteúdo, visto que o sistema empregado não é limitado a vocabulários.
 
 
 <details>
