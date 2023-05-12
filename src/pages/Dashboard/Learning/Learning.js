@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../../../components/Dashboard/Cards/Card";
 import LearningResult from "../../../components/Dashboard/Cards/Result";
+import LoadingCards from "../../../components/LoadingPage/LoadingCards";
 import UserContext from "../../../contexts/UserContext";
 import { getLearningCards } from "../../../services/cardApi";
 import { LearningStyle } from "./LearningStyle";
@@ -29,7 +30,7 @@ export default function LearningSession() {
   }, [numCards, userData]);
 
   if (cardsSession.length === 0) {
-    return <h1>Loading...</h1>;
+    return <LoadingCards />;
   }
 
   return (
